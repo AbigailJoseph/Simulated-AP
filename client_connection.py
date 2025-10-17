@@ -13,9 +13,7 @@ if not api_key:
 client = anthropic.Anthropic(api_key=api_key)
 
 # Initialize conversation history
-messages = [
-    {"role": "system", "content": "You are a helpful assistant."}
-]
+messages = []
 
 def chat_with_claude(user_input):
     # Append user message to conversation history
@@ -26,9 +24,7 @@ def chat_with_claude(user_input):
         model="claude-sonnet-4-20250514",
         max_tokens = 1024,
         system="You are a helpful assistant.",
-        messages=[
-            {"role": "user", "content": user_input}
-        ]
+        messages=messages
     )
 
     # Get Claude's reply
