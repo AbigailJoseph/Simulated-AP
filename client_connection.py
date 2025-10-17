@@ -1,7 +1,16 @@
+import os
 import anthropic
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_key = os.getenv("ANTHROPIC_KEY")
+
+if not api_key:
+    raise ValueError("API key not found.")
 
 # Initialize Claude API client
-client = anthropic.Anthropic(api_key="ANTHROPIC_KEY")
+client = anthropic.Anthropic(api_key=api_key)
 
 # Initialize conversation history
 messages = [
@@ -14,13 +23,16 @@ def chat_with_claude(user_input):
 
     # Call Claude API
     response = client.messages.create(
-        model="claude-3.5",
-        messages=messages,
-        max_tokens_to_sample=300
+        model="claude-sonnet-4-20250514",
+        max_tokens = 1024,
+        system="You are a helpful assistant.",
+        messages=[
+            {"role": "user", "content": user_input}
+        ]
     )
 
     # Get Claude's reply
-    assistant_reply = response["completion"]
+    assistant_reply = response.content[0].text
 
     # Append assistant's reply to conversation history
     messages.append({"role": "assistant", "content": assistant_reply})
