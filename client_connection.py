@@ -9,10 +9,7 @@ api_key = os.getenv("ANTHROPIC_KEY")
 if not api_key:
     raise ValueError("API key not found.")
 
-# Initialize Claude API client
 client = anthropic.Anthropic(api_key=api_key)
-
-# Initialize conversation history
 messages = []
 
 def chat_with_claude(user_input):
